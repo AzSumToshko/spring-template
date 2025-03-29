@@ -1,0 +1,1 @@
+Here add all external services which are used in the application from 3rd party services like AWS Azure GCP etc.
