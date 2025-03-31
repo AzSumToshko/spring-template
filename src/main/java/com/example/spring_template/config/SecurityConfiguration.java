@@ -13,6 +13,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static com.example.spring_template.constant.Constants.API_ENDPOINT;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -31,11 +33,14 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/wiki/**").permitAll()
 
-                    .requestMatchers(HttpMethod.POST, "/api/v1/cars/**").permitAll()
-                    .requestMatchers( "/api/v1/engines/**").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/v1/cars/**").hasAuthority(Roles.ADMIN.name())
+                    .requestMatchers(HttpMethod.GET, API_ENDPOINT + "/cars/**").permitAll()
+                    .requestMatchers(HttpMethod.POST, API_ENDPOINT + "/cars/**").hasAuthority(Roles.ADMIN.name())
+                    .requestMatchers(HttpMethod.PUT, API_ENDPOINT + "/cars/**").hasAuthority(Roles.ADMIN.name())
+                    .requestMatchers(HttpMethod.DELETE, API_ENDPOINT + "/cars/**").hasAuthority(Roles.ADMIN.name())
 
                     .requestMatchers("/api/v1/admin/**").hasAuthority(Roles.ADMIN.name())
+                    // Do not remove the line above since it's used as trigger line for the entity generator and appends 4 rules above it.
+                    // it's looking for "/api/v1/admin/**" so do not remove this part and if you move the line keep in mind that if you run the command 4 rules will appear above the line
                     .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
