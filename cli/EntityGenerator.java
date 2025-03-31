@@ -5,8 +5,8 @@ import java.nio.file.*;
 import java.util.*;
 
 public class EntityGeneratorCLI {
-    // To run the command inside root directory: java cli/EntityGeneratorCLI.java EngineFour
-    // To run the command inside root directory: java cli/EntityGeneratorCLI.java Motor model:String horsepower:int ....
+    // To run the command inside root directory: java cli/EntityGenerator.java EngineFour
+    // To run the command inside root directory: java cli/EntityGenerator.java Motor model:String horsepower:int ....
 
     private static final String BASE_PATH = "src/main/java";
     private static final String MIGRATIONS_PATH = "src/main/resources/db/migration";
