@@ -4,8 +4,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 import io.github.cdimascio.dotenv.DotenvEntry;
 import org.springframework.core.env.EnumerablePropertySource;
 
-import java.util.Set;
-
 public class DotenvPropertySource extends EnumerablePropertySource<Dotenv> {
 
     public DotenvPropertySource(String name, Dotenv dotenv) {

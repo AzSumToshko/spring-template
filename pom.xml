@@ -40,16 +40,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.13.0</version>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -223,7 +222,7 @@
 			<artifactId>jjwt-jackson</artifactId> <!-- Use Jackson for JSON serialization/deserialization -->
 			<version>0.12.6</version>
 		</dependency>
-		<!--This one is for better auth jwt verification-->
+		<!-- This one is for better auth jwt verification -->
 		<dependency>
 			<groupId>com.nimbusds</groupId>
 			<artifactId>nimbus-jose-jwt</artifactId>
@@ -232,13 +231,35 @@
 		<dependency>
 			<groupId>com.google.crypto.tink</groupId>
 			<artifactId>tink</artifactId>
-			<version>1.11.0</version>
+			<version>1.17.0</version>
 		</dependency>
 
+        <!-- SWAGGER UI -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.8.0</version>
+        </dependency>
 
-	</dependencies>
+        <!-- Unit Tests -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-	<build>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr4-runtime</artifactId>
+                <version>4.13.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

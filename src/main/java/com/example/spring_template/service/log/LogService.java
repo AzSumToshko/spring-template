@@ -7,7 +7,6 @@ import com.example.spring_template.util.AuthContextUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Service
 public class LogService {

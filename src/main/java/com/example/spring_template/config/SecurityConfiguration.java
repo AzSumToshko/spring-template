@@ -29,13 +29,12 @@ public class SecurityConfiguration {
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers(
-                            "/swagger-ui/**",
-                            "/v3/api-docs/**",
-                            "/api/v1/public/**"
-                    ).permitAll()
+                    .requestMatchers("/wiki/**").permitAll()
+
                     .requestMatchers(HttpMethod.POST, "/api/v1/cars/**").permitAll()
+                    .requestMatchers( "/api/v1/engines/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/v1/cars/**").hasAuthority(Roles.ADMIN.name())
+
                     .requestMatchers("/api/v1/admin/**").hasAuthority(Roles.ADMIN.name())
                     .anyRequest().authenticated()
             )

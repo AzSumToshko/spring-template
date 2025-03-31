@@ -1,18 +1,14 @@
 package com.example.spring_template.domain.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CarResponseDTO {
+public class EngineResponseDTO {
     private UUID id;
     private String model;
-    private String manufacturer;
+    private int horsepower;
 }
