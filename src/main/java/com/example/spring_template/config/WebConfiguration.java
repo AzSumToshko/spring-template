@@ -5,13 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Configuration
@@ -20,6 +21,11 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Autowired
     private RequestInterceptor requestInterceptor;
+
+    @Bean
+    public StringHttpMessageConverter stringHttpMessageConverter() {
+        return new StringHttpMessageConverter(StandardCharsets.UTF_8);
+    }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -33,17 +39,8 @@ public class WebConfiguration implements WebMvcConfigurer {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
-
-    @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
-        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-        interceptor.setParamName("lang"); // Use ?lang=xx in URLs
-        return interceptor;
-    }
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(requestInterceptor);
-        registry.addInterceptor(localeChangeInterceptor());
     }
 }

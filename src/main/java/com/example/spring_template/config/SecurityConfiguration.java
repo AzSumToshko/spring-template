@@ -34,6 +34,7 @@ public class SecurityConfiguration {
                             "/v3/api-docs/**",
                             "/api/v1/public/**"
                     ).permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/v1/cars/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/v1/cars/**").hasAuthority(Roles.ADMIN.name())
                     .requestMatchers("/api/v1/admin/**").hasAuthority(Roles.ADMIN.name())
                     .anyRequest().authenticated()

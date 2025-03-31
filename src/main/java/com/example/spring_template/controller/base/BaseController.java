@@ -2,6 +2,7 @@ package com.example.spring_template.controller.base;
 
 import com.example.spring_template.domain.entity.base.BaseEntity;
 import com.example.spring_template.service.crud.base.BaseService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public abstract class BaseController<T extends BaseEntity, ReqDTO, ResDTO> {
     }
 
     @PostMapping
-    public ResponseEntity<ResDTO> create(@RequestBody ReqDTO dto) {
+    public ResponseEntity<ResDTO> create(@Valid @RequestBody ReqDTO dto) {
         return ResponseEntity.ok(service.save(dto));
     }
 
@@ -33,7 +34,7 @@ public abstract class BaseController<T extends BaseEntity, ReqDTO, ResDTO> {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResDTO> update(@PathVariable UUID id, @RequestBody ReqDTO dto) {
+    public ResponseEntity<ResDTO> update(@PathVariable UUID id, @Valid @RequestBody ReqDTO dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 

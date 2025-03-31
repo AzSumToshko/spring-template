@@ -4,6 +4,8 @@ import com.example.spring_template.domain.entity.base.BaseEntity;
 import com.example.spring_template.repository.base.BaseRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageImpl;
@@ -18,12 +20,14 @@ public abstract class BaseService<T extends BaseEntity, ReqDTO, ResDTO> {
     protected final ModelMapper modelMapper;
     private final Class<T> entityClass;
     private final Class<ResDTO> resDtoClass;
+    private final MessageSource messageSource;
 
-    protected BaseService(BaseRepository<T> repository, ModelMapper modelMapper, Class<T> entityClass, Class<ResDTO> resDtoClass) {
+    protected BaseService(BaseRepository<T> repository, ModelMapper modelMapper, Class<T> entityClass, Class<ResDTO> resDtoClass, MessageSource messageSource) {
         this.repository = repository;
         this.modelMapper = modelMapper;
         this.entityClass = entityClass;
         this.resDtoClass = resDtoClass;
+        this.messageSource = messageSource;
     }
 
     public ResDTO save(ReqDTO dto) {
@@ -34,7 +38,12 @@ public abstract class BaseService<T extends BaseEntity, ReqDTO, ResDTO> {
 
     public ResDTO findById(UUID id) {
         T entity = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Entity with ID " + id + " not found"));
+                .orElseThrow(() -> {
+                    String message = messageSource.getMessage(
+                            "error.entity.notfound", new Object[]{id}, LocaleContextHolder.getLocale()
+                    );
+                    return new EntityNotFoundException(message);
+                });
         return modelMapper.map(entity, resDtoClass);
     }
 
@@ -48,7 +57,10 @@ public abstract class BaseService<T extends BaseEntity, ReqDTO, ResDTO> {
 
     public ResDTO update(UUID id, ReqDTO dto) {
         if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("Entity with ID " + id + " not found");
+            String message = messageSource.getMessage(
+                    "error.entity.notfound", new Object[]{id}, LocaleContextHolder.getLocale()
+            );
+            throw new EntityNotFoundException(message);
         }
         T entity = modelMapper.map(dto, entityClass);
         entity.setId(id);
@@ -58,7 +70,10 @@ public abstract class BaseService<T extends BaseEntity, ReqDTO, ResDTO> {
 
     public void delete(UUID id) {
         if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("Entity with ID " + id + " not found");
+            String message = messageSource.getMessage(
+                    "error.entity.notfound", new Object[]{id}, LocaleContextHolder.getLocale()
+            );
+            throw new EntityNotFoundException(message);
         }
 
         repository.deleteById(id);
